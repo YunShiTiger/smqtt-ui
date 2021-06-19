@@ -16,7 +16,7 @@
               <a-input
                 autocomplete="autocomplete"
                 size="large"
-                placeholder="admin"
+                placeholder="smqtt"
                 v-decorator="['name', {rules: [{ required: true, message: '请输入账户名', whitespace: true}]}]"
               >
                 <a-icon slot="prefix" type="user" />
@@ -25,7 +25,7 @@
             <a-form-item>
               <a-input
                 size="large"
-                placeholder="888888"
+                placeholder="smqtt"
                 autocomplete="autocomplete"
                 type="password"
                 v-decorator="['password', {rules: [{ required: true, message: '请输入密码', whitespace: true}]}]"
@@ -75,9 +75,9 @@
 
 <script>
 import CommonLayout from '@/layouts/CommonLayout'
-import {login, getRoutesConfig} from '@/services/user'
+import {login } from '@/services/user'
 import {setAuthorization} from '@/utils/request'
-import {loadRoutes} from '@/utils/routerUtil'
+// import {loadRoutes} from '@/utils/routerUtil'
 import {mapMutations} from 'vuex'
 
 export default {
@@ -111,22 +111,24 @@ export default {
     afterLogin(res) {
       this.logging = false
       const loginRes = res.data
-      if (loginRes.code >= 0) {
-        const {user, permissions, roles} = loginRes.data
-        this.setUser(user)
-        this.setPermissions(permissions)
-        this.setRoles(roles)
-        setAuthorization({token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt)})
-        // 获取路由配置
-        getRoutesConfig().then(result => {
-          const routesConfig = result.data.data
-          loadRoutes(routesConfig)
-          this.$router.push('/dashboard/query')
-          this.$message.success(loginRes.message, 3)
+        this.setUser({
+          name: 'admin',
+          avatar: '',
+          address: '',
+          position: ''
         })
-      } else {
-        this.error = loginRes.message
-      }
+        this.setPermissions([{id: 'queryForm', operation: ['add', 'edit']}])
+        this.setRoles([{id: 'admin', operation: ['add', 'edit', 'delete']}])
+        setAuthorization({token: loginRes.data.access_token, expireAt: new Date(loginRes.data.expires_in)})
+      this.$router.push('/dashboard/query')
+      this.$message.success(loginRes.message, 3)
+        // // 获取路由配置
+        // getRoutesConfig().then(result => {
+        //   const routesConfig = result.data.data
+        //   loadRoutes(routesConfig)
+        //   this.$router.push('/dashboard/query')
+        //   this.$message.success(loginRes.message, 3)
+        // })
     }
   }
 }
