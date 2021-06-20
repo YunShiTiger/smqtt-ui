@@ -90,7 +90,8 @@ export default {
     return {
       logging: false,
       error: '',
-      form: this.$form.createForm(this)
+      form: this.$form.createForm(this),
+      userName:'admin'
     }
   },
   computed: {
@@ -107,6 +108,7 @@ export default {
           this.logging = true
           const name = this.form.getFieldValue('name')
           const password = this.form.getFieldValue('password')
+          this.userName=name
           login(name, password).then(this.afterLogin)
         }
       })
@@ -115,7 +117,7 @@ export default {
       this.logging = false
       const loginRes = res.data
       this.setUser({
-        name: 'admin',
+        name: this.userName,
         avatar: '',
         address: '',
         position: ''
@@ -124,7 +126,7 @@ export default {
       this.setRoles([{id: 'admin', operation: ['add', 'edit', 'delete']}])
       setAuthorization({token: loginRes.data.access_token, expireAt: new Date(loginRes.data.expires_in)})
       this.$router.push('/dashboard/connections')
-      this.$message.success("admin，欢迎回来", 3)
+      this.$message.success(`${this.userName}，欢迎回来`, 3)
       // // 获取路由配置
       // getRoutesConfig().then(result => {
       //   const routesConfig = result.data.data
