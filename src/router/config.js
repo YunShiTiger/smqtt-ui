@@ -50,13 +50,20 @@ const options = {
             //   component: () => import('@/pages/dashboard/analysis'),
             // }
             {
-                    path: 'query',
-                    name: '节点信息',
-                    meta: {
-                      authority: 'queryForm',
-                    },
-                    component: () => import('@/pages/list/QueryList'),
+              path: 'connections',
+              name: '连接信息',
+              component: () => import('@/pages/dashboard/connections'),
             },
+            {
+              path: 'clusters',
+              name: '集群信息',
+              component: () => import('@/pages/dashboard/clusters'),
+            },
+            {
+              path: 'subscribes',
+              name: '订阅信息',
+              component: () => import('@/pages/dashboard/subscribes'),
+            }
           ]
         },
         // {

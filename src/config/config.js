@@ -4,7 +4,7 @@ module.exports = {
     color: '#13c2c2',
     mode: 'night',
   },
-  multiPage: false,
+  multiPage: true,
   hideSetting: true,
   animate: {
     name: 'lightSpeed',

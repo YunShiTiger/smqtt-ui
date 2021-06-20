@@ -1,1 +1,1 @@
-# smqtt-ui~~~~
+# smqtt-ui

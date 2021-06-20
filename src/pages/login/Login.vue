@@ -124,7 +124,7 @@ export default {
       this.setRoles([{id: 'admin', operation: ['add', 'edit', 'delete']}])
       setAuthorization({token: loginRes.data.access_token, expireAt: new Date(loginRes.data.expires_in)})
       this.$router.push('/dashboard/query')
-      this.$message.success(loginRes.message, 3)
+      this.$message.success("admin，欢迎回来", 3)
       // // 获取路由配置
       // getRoutesConfig().then(result => {
       //   const routesConfig = result.data.data
